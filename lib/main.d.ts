@@ -1,5 +1,5 @@
 type Over = () => void;
-type Panic = (err: Error) => void;
+type Panic = (err: Error) => boolean | void;
 type Interceptor = (args: Status) => void;
 type Task = (complete: () => void) => void;
 type Status = {
@@ -17,7 +17,6 @@ type Syncer = {
 };
 declare function createSyncer(): {
     isResolved(detail?: boolean): boolean | Status;
-    reset(): void;
     addTask(task: Task): void;
     run(repeat?: number, every?: number): void;
     onOver(callback: Over): void;
@@ -25,5 +24,5 @@ declare function createSyncer(): {
     intercept(interceptor: Interceptor): void;
 };
 declare const Syncer: typeof createSyncer;
-export type { Task, Over, Panic, Status, };
+export type { Task, Over, Panic, Interceptor, Status, };
 export { createSyncer, Syncer };

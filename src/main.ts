@@ -1,5 +1,5 @@
 type Over = () => void;
-type Panic = (err: Error) => void;
+type Panic = (err: Error) => boolean | void;
 type Interceptor = (args: Status) => void;
 type Task = (complete: () => void) => void;
 
@@ -7,7 +7,7 @@ type SyncerCore = {
     worries: Task[],
     loop?: any,
     over?: Over,
-    panic: Panic,
+    panic?: Panic,
     interceptor?: Interceptor,
 }
 
@@ -33,7 +33,7 @@ function createSyncer() {
         worries: [],
         loop: undefined,
         over: undefined,
-        panic: (err: Error) => { throw err; },
+        panic: undefined,
         interceptor: undefined,
     };
 
@@ -54,23 +54,22 @@ function createSyncer() {
         STATUS.isResolved = false;
         
         try { SYNCER_CORE.worries[STATUS.index](() => { STATUS.isResolved = true; }); }
-        catch(err) { return end(err as Error); };
+        catch(err) { return end(err as Error) };
     }
 
     function end(err?: Error) {
+        if(!err && SYNCER_CORE.over) {
+            SYNCER_CORE.over();
+        } else if(err && SYNCER_CORE.panic && SYNCER_CORE.panic(err)) {
+            STATUS.isResolved = true;
+            return;
+        }
         clearInterval(SYNCER_CORE.loop);
-        !err && SYNCER_CORE.over && SYNCER_CORE.over();
-        err && SYNCER_CORE.panic(err);
     }
 
     return {
         isResolved(detail?: boolean) {
             return detail ? STATUS : STATUS.isResolved;
-        },
-        reset() {
-            STATUS.isResolved = true;
-            STATUS.index = -1;
-            STATUS.roundLeft = Infinity;
         },
         addTask(task: Task) { SYNCER_CORE.worries.push(task); },
         run(repeat?: number, every?: number) {

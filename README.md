@@ -2,7 +2,7 @@
 
 `v1.0.0`
 
-A minimal library for serializing asynchronous tasks.
+A minimal library for serializing (a)synchronous tasks.
 
 ---
 
@@ -84,7 +84,7 @@ Sets an `onOver()` handler:
 syncer.onOver(() => { console.log("All finished.") });
 ```
 
-Similarly, `onPanic()` can be called with a void function with **one** `Error` parameter to be invoked when an exception arises. When an exception arises, the `syncer` terminates the queue, call for `onPanic()` and exits the queue.
+Similarly, `onPanic()` can be called with a void function with **one** `Error` parameter to be invoked when an exception arises. When an exception arises, `syncer` calls `onPanic()` and exits the queue by default. To continue to the next task, the handler should return `true`.
 
 Sets an `onPanic()` handler:
 
@@ -122,7 +122,7 @@ Runs the serialized tasks in order:
 syncer.run();
 ```
 
-```bash
+```
 > We are at task -1 that is resolved. 1 round(s) remaining.
 > We are at task 0 that is being resolved. 1 round(s) remaining.
 ...
@@ -135,7 +135,7 @@ syncer.run();
 > We are at task 2 that is being resolved. 1 round(s) remaining.
 ...
 > "Just panicked!"
-> [nothing about task four gets printed.]
+> [nothing about task four gets printed because the queue was terminated and we didn't return true in onPanic()]
 ```
 
 ---

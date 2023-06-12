@@ -41,15 +41,16 @@ describe("createSyncer()", function() {
             syncer.addTask((complete: () => void) => { i.push("first"); complete(); });
             syncer.addTask((complete: () => void) => { i.push("second"); complete(); });
             syncer.addTask((complete: () => void) => { i.push("third"); complete(); });
-            syncer.addTask((complete: () => void) => { throw new Error(); complete(); });
+            syncer.addTask((complete: () => void) => { throw new Error("Controlled exception"); complete(); });
             syncer.addTask((complete: () => void) => { i.push("fourth"); complete(); });
             syncer.addTask((complete: () => void) => { i.push("fifth"); complete(); });
-            syncer.onPanic(() => {
+            syncer.onPanic(() => true);
+            syncer.onOver(() => {
                 should(i[0]).equal("first");
                 should(i[1]).equal("second");
                 should(i[2]).equal("third");
-                should(i[3]).undefined();
-                should(i[4]).undefined();
+                should(i[3]).equal("fourth");
+                should(i[4]).equal("fifth");
                 done();
             });
             syncer.run();
