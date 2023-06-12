@@ -1,0 +1,25 @@
+{
+  "name": "syncer",
+  "version": "1.0.0",
+  "description": "A minimal library to schedule asynchronous tasks.",
+  "main": "./lib/main.js",
+  "scripts": {
+    "test": "mocha ./lib/test",
+    "compile": "npx tsc",
+    "build": "npx tsc && mocha ./lib/test"
+  },
+  "keywords": [
+    "asynchronous",
+    "scheduling",
+    "serializing"
+  ],
+  "author": "Sai Aung Kyaw Htet <aungkyawhtet.social@gmail.com",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^20.3.0",
+    "mocha": "^10.2.0",
+    "should": "^13.2.3",
+    "typescript": "^5.1.3"
+  }
+}
