@@ -1,5 +1,5 @@
 {
-  "name": "syncer",
+  "name": "syncerely",
   "version": "1.0.0",
   "description": "A minimal library for serializing (a)synchronous tasks.",
   "main": "./lib/main.js",

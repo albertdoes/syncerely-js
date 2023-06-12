@@ -1,4 +1,4 @@
-# **Syncer**
+# **Syncerely**
 
 `v1.0.0`
 
@@ -9,26 +9,26 @@ A minimal library for serializing (a)synchronous tasks.
 ## **Installation**
 
 ```bash
-> npm i syncer
+> npm i syncerely
 ```
 
 ---
 
 ## **Usage**
 
-`syncer` provides the following interfaces:
+`syncerely` provides the following interfaces:
 
 - [`createSyncer()`](#createSyncer)
 
 ---
 
-First, import `syncer`:
+First, import `syncerely`:
 
 ```typescript
-import * as syncer from "syncer";
-import { functionInDemand } from "syncer",
+import * as syncerely from "syncerely";
+import { functionInDemand } from "syncerely",
 
-var syncer = require("syncer");
+var syncer = require("syncerely");
 ```
 
 ---
