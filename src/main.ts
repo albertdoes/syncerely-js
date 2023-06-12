@@ -46,7 +46,7 @@ function createSyncer() {
     function singularIteration() {
         SYNCER_CORE.interceptor && SYNCER_CORE.interceptor(STATUS);
         if(!STATUS.isResolved) return
-
+        
         STATUS.index += 1;
         if(STATUS.index === SYNCER_CORE.worries.length) STATUS.roundLeft -= 1;
         if(STATUS.roundLeft === 0) return end();
